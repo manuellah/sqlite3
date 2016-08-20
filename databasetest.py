@@ -4,13 +4,15 @@ def Main():
     try:
         con = sqlite3.connect("test.db") #create connection
         cur = con.cursor() #creates a new cursor object which executes sql stmt for us
-        cur.execute("CREATE TABLE pets(Id INT, Name TEXT, Price INT)")
-        cur.execute("INSERT INTO pets VALUES(1, 'cat',400)")
-        cur.execute("INSERT INTO pets VALUES(2, 'dog',600)")
-        cur.execute("INSERT INTO pets VALUES(3,'Dolly',450)")
+        
+        #cur.execute("CREATE TABLE pets(Pet_id INTEGER, Name TEXT, Price INT)")
+        print("execute")
+        cur.execute("INSERT INTO pets VALUES('cat',400)")
+        cur.execute("INSERT INTO pets VALUES('dog',600)")
+        cur.execute("INSERT INTO pets VALUES('Dolly',450)")
         
         con.commit()
-        
+        print("commit")
         cur.execute("SELECT * FROM pets")
 
         data = cur.fetchall()
@@ -18,10 +20,10 @@ def Main():
         for row in data:
              print(row)
         
-    except:
+    except e:
         if con:
             con.rollback()
-            print("There was a problem with the SQL db")
+            print(e)
     finally:        
         if con:    
             con.close()
